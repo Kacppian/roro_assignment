@@ -1,0 +1,28 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('home.static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h2>Search for some repos!</h2>
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input type="text" class="  search-query form-control" placeholder="Search" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {% for repo in repos %}
+                <div class="repo col-xs-12 col-sm-6 col-md-3">
+                    {{ repo.name }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

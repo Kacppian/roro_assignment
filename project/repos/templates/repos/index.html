@@ -1,0 +1,36 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('repos.static', filename='css/styles.css') }}">
+{% endblock %}
+{% block content %}
+    <h2 class="col-md-8 col-md-offset-2">HEADING</h2>
+    <div class="col-md-8 col-md-offset-2">
+        {% if repo_contents.type == 'file' %}
+            <div class="col-md-8 col-md-offset-1">
+                    <code>
+                        {{ convert_text_to_html(repo_contents.decoded_content.decode('utf-8')) | safe}}
+                    </code>
+            </div>
+        {% else %}
+            <table class="table table-striped table-bordered">
+                <tbody>
+                    {% for content in repo_contents | sort(attribute='type') %}
+                        <tr>
+                            <td class="content-row">
+                                {% if content.type == 'dir' %}
+                                    <span class="glyphicon glyphicon-folder-close"></span>
+                                    <a href="{{'{}/'.format(content.name)}}">{{ content.name }}</a>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-file"></span>
+                                    <a href="{{'{}'.format(content.name)}}">{{ content.name }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
+
