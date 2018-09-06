@@ -1,0 +1,21 @@
+.repo {
+    padding: 10px 10px 10px 0px;
+    /*margin: 5px;*/
+    border-bottom: 1px #e1e4e8 solid;
+    /*height: 200px;*/
+}
+
+ul{
+    list-style-type: none;
+    padding: 0px;
+}
+
+.repo-name{
+    font-size: 20px;
+    color: #0366d6;
+    font-weight: bold;
+}
+
+.user-avatar{
+    width: 70%;
+}

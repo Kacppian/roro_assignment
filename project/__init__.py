@@ -23,17 +23,12 @@ Bootstrap(app)
 github_instance = Github('aade3a843efa808800c4f67964ad9c47b808977f', per_page=30)
 
 # Blueprints
-# from project.auth.views import auth_blueprint
-# from project.profile.views import profile_blueprint
+from project.profile.views import profile_blueprint
+app.register_blueprint(profile_blueprint, url_prefix='/profile')
 
-# app.register_blueprint(auth_blueprint, url_prefix='/auth')
-# app.register_blueprint(profile_blueprint, url_prefix='/user')
 from project.home.views import home_blueprint
 app.register_blueprint(home_blueprint)
 
 from project.repos.views import repos_blueprint
 app.register_blueprint(repos_blueprint, url_prefix='/repos')
-# @app.route('/')
-# def home():
-#     return 'This home bitch!'
 

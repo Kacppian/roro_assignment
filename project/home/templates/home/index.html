@@ -7,7 +7,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <h2>Search for some repos!</h2>
+            <h2>Search for some users!</h2>
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
                     <input type="text" class="  search-query form-control" placeholder="Search" />
@@ -20,7 +20,7 @@
         <div class="row">
             {% for repo in repos %}
                 <div class="repo col-xs-12 col-sm-6 col-md-3">
-                    {{ repo.name }}
+                    {{ repo.full_name }}
                 </div>
             {% endfor %}
         </div>
