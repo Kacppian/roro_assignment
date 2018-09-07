@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
     {% set repo_url = "/repos/{}".format(repo.full_name) %}
-    <h3 class="col-md-8 col-md-offset-2">{{ repo.owner.login }}/<a href="{{repo_url}}">{{ repo.name }}</a></h3>
+    <h3 class="col-md-8 col-md-offset-2"><a href="/profile/{{repo.owner.login}}">{{ repo.owner.login }}</a>/<a href="{{repo_url}}">{{ repo.name }}</a></h3>
     <div class="col-md-8 col-md-offset-2">
         <h3>Code Directory</h3>
         <p>

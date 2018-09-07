@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify, session, render_template, redirect, Markup
 from textile import textile
-# from flask_login import current_user, login_user
 from project import github_instance
 
 repos_blueprint = Blueprint(
@@ -42,41 +41,26 @@ def get_repo(owner_name, repo_name):
 def get_contents(path, repo):
     return repo.get_contents(path)
 
-@repos_blueprint.route('/<owner_name>/<repo_name>/')
-def get_repo_structure(owner_name, repo_name):
-    # print('----------------')
-    # print(owner_name)
-    # print(repo_name)
-    repo = get_repo(owner_name, repo_name)
-    repo_contents = get_contents('/', repo)
-    # print(repo_contents)
-    # repo_content = get_repo_content(repo_name="{}/{}".format(owner_name, repo_name))
-    return render_template('./repos/index.html', repo_contents=repo_contents, repo=repo)
-
-@repos_blueprint.route('/<owner_name>/<repo_name>/<path:dir_name>/', defaults={'file_name': None})
+@repos_blueprint.route('/<owner_name>/<repo_name>/', defaults={'dir_name': None, 'file_name': None})
+@repos_blueprint.route('/<owner_name>/<repo_name>/<path:dir_name>/')
 @repos_blueprint.route('/<owner_name>/<repo_name>/<path:dir_name>/<file_name>')
-def get_dir(owner_name, repo_name, dir_name, file_name=None):
-    # print(file_name)
-    # print(dir_name)
+def get_dir(owner_name, repo_name, dir_name, file_name):
+    print(file_name)
+    print(dir_name)
+    print(repo_name)
+    print(owner_name)
+
     if file_name:
         path = "{}/{}".format(dir_name, file_name)
-    else:
+    elif dir_name:
         path = dir_name
+    else:
+        path = '/'
+
     repo = get_repo(owner_name, repo_name)
     repo_contents = get_contents(path, repo)
     # print(repo_contents)
     return render_template('./repos/index.html', repo_contents=repo_contents, repo=repo)
-
-
-
-# @repos_blueprint.route('/<owner_name>/<repo_name>/<path:dir_name>/<file_name>')
-# def get_file(owner_name, repo_name, dir_name, file_name):
-#     print('************8')
-#     print(file_name)
-#     repo = get_repo(owner_name, repo_name)
-#     file_path = "{}/{}".format(dir_name, file_name)
-#     file_content = get_contents(file_path, repo)
-#     return render_template('./repos/file.html', file_content=file_content)
 
 
 
