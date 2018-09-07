@@ -1,5 +1,8 @@
-from flask import Blueprint, request, jsonify, session, render_template, redirect, Markup
-from textile import textile
+from flask import Blueprint, request, jsonify, session, render_template, redirect
+from pygments.lexers import get_lexer_for_filename
+from pygments.formatters import HtmlFormatter
+from pygments.styles import get_style_by_name
+from pygments import highlight
 from project import github_instance
 
 repos_blueprint = Blueprint(
@@ -10,10 +13,17 @@ repos_blueprint = Blueprint(
                            )
 repo_names = {}
 
+def color_it(file_name, content):
+    lexer = get_lexer_for_filename(file_name)
+    style = get_style_by_name('friendly')
+    formatter = HtmlFormatter(linenos=True, style=style, noclasses=True)
+    return highlight(content, lexer, formatter)
+
 @repos_blueprint.context_processor
 def utility_processor():
-    def convert_text_to_html(string):
-        return textile(string)
+    def convert_text_to_html(file_name, content):
+        # return textile(string)
+        return color_it(file_name, content)
 
     def get_fragment_list(path):
         path_fragment_list = list(filter(None, path.split('/')))[3:]

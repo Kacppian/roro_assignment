@@ -36,6 +36,6 @@ wtforms = "*"
 flask-wtf = "*"
 werkzeug = "*"
 pygithub = "*"
-textile = "*"
+pygments = "*"
 
 [dev-packages]
