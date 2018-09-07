@@ -5,7 +5,11 @@
 {% endblock %}
 {% block content %}
     {% set repo_url = "/repos/{}".format(repo.full_name) %}
-    <h3 class="col-md-8 col-md-offset-2"><a href="/profile/{{repo.owner.login}}">{{ repo.owner.login }}</a>/<a href="{{repo_url}}">{{ repo.name }}</a></h3>
+    <h3 class="col-md-8 col-md-offset-2">
+        <a href="/profile/{{repo.owner.login}}">{{ repo.owner.login }}</a>
+        <span>/</span>
+        <a href="{{repo_url}}">{{ repo.name }}</a>
+    </h3>
     <div class="col-md-8 col-md-offset-2">
         <h3>Code Directory</h3>
         <p>
@@ -18,10 +22,10 @@
         </p>
         {% if repo_contents.type == 'file' %}
             <div class="col-md-8">
-                    <code>
+                    <pre>
 
                         {{ convert_text_to_html(repo_contents.decoded_content.decode('utf-8')) | safe}}
-                    </code>
+                    </pre>
             </div>
         {% else %}
             <table class="table table-striped table-bordered">

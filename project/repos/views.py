@@ -41,15 +41,10 @@ def get_repo(owner_name, repo_name):
 def get_contents(path, repo):
     return repo.get_contents(path)
 
-@repos_blueprint.route('/<owner_name>/<repo_name>/', defaults={'dir_name': None, 'file_name': None})
+@repos_blueprint.route('/<owner_name>/<repo_name>/')
 @repos_blueprint.route('/<owner_name>/<repo_name>/<path:dir_name>/')
 @repos_blueprint.route('/<owner_name>/<repo_name>/<path:dir_name>/<file_name>')
-def get_dir(owner_name, repo_name, dir_name, file_name):
-    print(file_name)
-    print(dir_name)
-    print(repo_name)
-    print(owner_name)
-
+def get_dir_or_file(owner_name, repo_name, dir_name=None, file_name=None):
     if file_name:
         path = "{}/{}".format(dir_name, file_name)
     elif dir_name:
@@ -59,7 +54,6 @@ def get_dir(owner_name, repo_name, dir_name, file_name):
 
     repo = get_repo(owner_name, repo_name)
     repo_contents = get_contents(path, repo)
-    # print(repo_contents)
     return render_template('./repos/index.html', repo_contents=repo_contents, repo=repo)
 
 
