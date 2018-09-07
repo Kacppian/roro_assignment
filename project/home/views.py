@@ -20,8 +20,6 @@ def get_popular_repos():
 
 @home_blueprint.route('/')
 def home():
-    #ToDo Logic to fetch the repos
-    # repos = ['Heelo', 'Meelo', 'Delo']
     repos = get_popular_repos()
     return render_template('./home/index.html', repos=repos)
 

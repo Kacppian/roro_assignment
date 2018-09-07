@@ -22,9 +22,7 @@
         </p>
         {% if repo_contents.type == 'file' %}
             <div class="col-md-8">
-                    <!-- <pre> -->
                 {{ convert_text_to_html(repo_contents.path,repo_contents.decoded_content.decode('utf-8')) | safe}}
-                    <!-- </pre> -->
             </div>
         {% else %}
             <table class="table table-striped table-bordered">

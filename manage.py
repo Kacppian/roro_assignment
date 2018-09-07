@@ -1,17 +1,5 @@
 from flask import Flask, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
-
-from project import app, db
-# app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://kaushik:postgres@localhost/roro'
-
-# db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)
+from project import app
 
 @manager.command
 def list_routes():
