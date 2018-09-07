@@ -4,11 +4,22 @@
     <link rel="stylesheet" href="{{ url_for('repos.static', filename='css/styles.css') }}">
 {% endblock %}
 {% block content %}
-    <h2 class="col-md-8 col-md-offset-2">HEADING</h2>
+    {% set repo_url = "/repos/{}".format(repo.full_name) %}
+    <h3 class="col-md-8 col-md-offset-2">{{ repo.owner.login }}/<a href="{{repo_url}}">{{ repo.name }}</a></h3>
     <div class="col-md-8 col-md-offset-2">
+        <h3>Code Directory</h3>
+        <p>
+            <a href="{{ repo_url }}" class="base_dir path-link">{{ repo.name }}</a>
+            <span>/</span>
+            {% for path_element in get_fragment_list(request.path) %}
+                <a href="{{repo_url}}/{{path_element.url_path}}/" class="path-link">{{path_element.url_name}}</a>
+                <span>/</span>
+            {% endfor %}
+        </p>
         {% if repo_contents.type == 'file' %}
-            <div class="col-md-8 col-md-offset-1">
+            <div class="col-md-8">
                     <code>
+
                         {{ convert_text_to_html(repo_contents.decoded_content.decode('utf-8')) | safe}}
                     </code>
             </div>

@@ -1,3 +1,13 @@
 .content-row{
     padding: 5px;
 }
+
+.path-link{
+    margin: 3px;
+    font-size: 25px;
+}
+
+.path-link:last-of-type {
+    pointer-events: none;
+    color: #000;
+}
