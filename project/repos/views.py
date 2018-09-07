@@ -13,17 +13,13 @@ repos_blueprint = Blueprint(
                            )
 repo_names = {}
 
-def color_it(file_name, content):
-    lexer = get_lexer_for_filename(file_name)
-    style = get_style_by_name('friendly')
-    formatter = HtmlFormatter(linenos=True, style=style, noclasses=True)
-    return highlight(content, lexer, formatter)
-
 @repos_blueprint.context_processor
 def utility_processor():
-    def convert_text_to_html(file_name, content):
-        # return textile(string)
-        return color_it(file_name, content)
+    def syntax_highlight(file_name, content):
+        lexer = get_lexer_for_filename(file_name)
+        style = get_style_by_name('friendly')
+        formatter = HtmlFormatter(linenos=True, style=style, noclasses=True)
+        return highlight(content, lexer, formatter)
 
     def get_fragment_list(path):
         path_fragment_list = list(filter(None, path.split('/')))[3:]
