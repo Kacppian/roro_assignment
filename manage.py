@@ -1,5 +1,8 @@
 from flask import Flask, url_for
+from flask_script import Manager
 from project import app
+
+manager = Manager(app)
 
 @manager.command
 def list_routes():
