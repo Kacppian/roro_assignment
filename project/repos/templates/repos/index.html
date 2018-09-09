@@ -1,28 +1,32 @@
-{% extends "bootstrap/base.html" %}
-{% block styles %}
+{% extends 'project/layout.html' %}
+{% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('repos.static', filename='css/styles.css') }}">
 {% endblock %}
 {% block content %}
-    {% set repo_url = "/repos/{}".format(repo.full_name) %}
-    <h3 class="col-md-8 col-md-offset-2">
-        <a href="/profile/{{repo.owner.login}}">{{ repo.owner.login }}</a>
+    {% set base_repo_url =  url_for('repos.get_dirs', owner_name=repo.owner.login, repo_name=repo.name) %}
+
+    <h3 class="col-md-12">
+        <a href="{{url_for('profile.get_details', username=repo.owner.login)}}">{{ repo.owner.login }}</a>
         <span>/</span>
-        <a href="{{repo_url}}">{{ repo.name }}</a>
+        <a href="{{base_repo_url}}">{{ repo.name }}</a>
     </h3>
-    <div class="col-md-8 col-md-offset-2">
+    <hr class="col-xs-12">
+    <div class="col-md-12">
         <h3>Code Directory</h3>
-        <p>
-            <a href="{{ repo_url }}" class="base_dir path-link">{{ repo.name }}</a>
-            <span>/</span>
-            {% for path_element in get_fragment_list(request.path) %}
-                <a href="{{repo_url}}/{{path_element.url_path}}/" class="path-link">{{path_element.url_name}}</a>
+
+        <p class="nav-breadcrumb">
+            <a href="{{ base_repo_url }}" class="base_dir path-link">{{ repo.name }}</a>
+            {% for file_nav_url in file_nav_urls %}
                 <span>/</span>
+                <a href="{{ file_nav_url.url }}/" class="path-link">{{file_nav_url.url_name}}</a>
             {% endfor %}
+            <a href="{{history_url}}" class="btn btn-md btn-default pull-right">History</a>
         </p>
-        {% if repo_contents.type == 'file' %}
-            <div class="col-md-8">
-                {{ convert_text_to_html(repo_contents.path,repo_contents.decoded_content.decode('utf-8')) | safe}}
+
+        {% if file_contents %}
+            <div>
+                {{ file_contents | safe}}
             </div>
         {% else %}
             <table class="table table-striped table-bordered">
@@ -35,7 +39,9 @@
                                     <a href="{{'{}/'.format(content.name)}}">{{ content.name }}</a>
                                 {% else %}
                                     <span class="glyphicon glyphicon-file"></span>
-                                    <a href="{{'{}'.format(content.name)}}">{{ content.name }}</a>
+                                    <a href="{{url_for('repos.get_file', owner_name=repo.owner.login, repo_name=repo.name, file_path=content.path)}}">
+                                        {{ content.name }}
+                                    </a>
                                 {% endif %}
                             </td>
                         </tr>

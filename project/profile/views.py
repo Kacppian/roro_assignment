@@ -8,7 +8,7 @@ def get_github_user(username):
     return github_user
 
 @profile_blueprint.route('/<username>', methods=['GET'])
-def profile(username):
+def get_details(username):
     user = get_github_user(username)
     return render_template('./profile/index.html', user=user)
 

@@ -28,5 +28,7 @@ Flask-Bootstrap = "==3.3.7.1"
 werkzeug = "*"
 pygithub = "*"
 pygments = "*"
+coverage = "*"
+arrow = "*"
 
 [dev-packages]

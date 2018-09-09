@@ -1,28 +1,45 @@
-{% extends "bootstrap/base.html" %}
-{% block styles %}
+{% extends 'project/layout.html' %}
+{% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('home.static', filename='css/styles.css') }}">
 {% endblock %}
-
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <h2>Search for some users!</h2>
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" class="  search-query form-control" placeholder="Search" />
-                </div>
-            </div>
+    <div class="row">
+        <h2>Maybe search for some users?</h2>
+        <div id="custom-search-input">
+            <input type="text" class="search-query form-control col-md-6" id="search_bar" placeholder="Search" />
+            <button class="btn btn-md btn-success col-md-2" id="search_go">Go!</button>
         </div>
-    </div>
 
-    <div class="container">
-        <div class="row">
-            {% for repo in repos %}
-                <div class="repo col-xs-12 col-sm-6 col-md-3">
-                    {{ repo.full_name }}
-                </div>
-            {% endfor %}
+        <div class="col-md-10 popular_repos">
+            <h2>Here are some popular repos...</h2>
+            <small><i>[If you don't like stalking others' profiles]</i></small>
+            <ul>
+                {% for repo in popular_repos %}
+                    <li class="repo">
+                        <div class="repo-link">
+                            <a href="{{url_for('repos.get_dirs', owner_name=repo.owner.login, repo_name=repo.name)}}" class="repo-name">
+                                {{ repo.name }}
+                            </a>
+                        </div>
+                        {% if repo.description %}
+                            <div>
+                                <p class="repo-desc">{{ repo.description or '' }}</p>
+                            </div>
+                        {% endif %}
+
+                        {% if repo.language %}
+                            <div>
+                                <small class="repo-language">{{ repo.language or '' }}</small>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src="{{ url_for('home.static', filename='js/search.js') }}"></script>
 {% endblock %}

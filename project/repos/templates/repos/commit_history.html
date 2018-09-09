@@ -1,0 +1,39 @@
+{% extends 'project/layout.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('repos.static', filename='css/styles.css') }}">
+{% endblock %}
+{% block content %}
+    {% set base_repo_url =  url_for('repos.get_commits', owner_name=repo.owner.login, repo_name=repo.name) %}
+    {% set page = request.args.get('page', -1) | int %}
+    <div class="col-md-8 col-md-offset-2">
+        <p class="nav-breadcrumb">
+            <a href="{{ base_repo_url }}" class="base_dir path-link">{{ repo.name }}</a>
+            {% for file_nav_url in file_nav_urls %}
+                <span>/</span>
+                <a href="{{ file_nav_url.url }}/" class="path-link">{{file_nav_url.url_name}}</a>
+            {% endfor %}
+        </p>
+        {% if commits %}
+            <h3>Commits</h3>
+            <ol class="table-list table-list-bordered">
+                {% for commit in commits %}
+                <li>
+                    <div class="commit-meta">
+                        <strong>{{commit.commit.message.split('\n')[0]}}</strong>
+                        <p>SHA - {{commit.sha}}</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ol>
+
+        {% else %}
+            <h2>Sorry, there's no content here!</h2>
+        {% endif %}
+
+        <div class="{{ 'pagination-invisible' if commits|length < 50 else 'pagination' }}">
+            <a href="{{ next_url }}" class="{{'disabled' if not commits else 'next'}} btn btn-primary">Next</a>
+            <a href="{{ prev_url }}" class="{{'disabled' if page <= 0 else 'prev'}} btn btn-primary">Prev</a>
+        </div>
+    </div>
+{% endblock %}

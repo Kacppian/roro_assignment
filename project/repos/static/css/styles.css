@@ -1,13 +1,32 @@
-.content-row{
+.content-row {
     padding: 5px;
 }
 
-.path-link{
+.path-link {
     margin: 3px;
     font-size: 25px;
 }
 
-.path-link:last-of-type {
+a.path-link:nth-last-child(2) {
     pointer-events: none;
     color: #000;
+}
+
+.disabled {
+   pointer-events: none;
+   cursor: default;
+   color: grey;
+}
+
+.highlighttable {
+    width: 100%;
+}
+
+.pagination-invisible{
+    display: none;
+}
+
+.commit-pre {
+  white-space: pre-wrap !important;
+  word-break: keep-all !important;
 }

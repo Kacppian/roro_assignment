@@ -1,0 +1,23 @@
+{% extends 'project/layout.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('home.static', filename='css/styles.css') }}">
+{% endblock %}
+{% block content %}
+    {% set page = request.args.get('page', -1) | int %}
+    <div class="col-md-12">
+        <h3>Users</h3>
+        <hr>
+        <ul>
+            {% for user in users %}
+                <li class="repo">
+                    <a href="{{url_for('profile.get_details', username=user.login)}}" class="repo-name">{{ user.login }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="{{ 'pagination-invisible' if users|length < 50 else 'pagination' }}">
+        <a href="{{ next_url }}" class="{{'disabled' if not users else 'next'}} btn btn-primary">Next</a>
+        <a href="{{ prev_url }}" class="{{'disabled' if page <= 0 else 'prev'}} btn btn-primary">Prev</a>
+    </div>
+{% endblock %}

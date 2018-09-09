@@ -1,5 +1,5 @@
-{% extends "bootstrap/base.html" %}
-{% block styles %}
+{% extends 'project/layout.html' %}
+{% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('profile.static', filename='css/styles.css') }}">
 {% endblock %}
@@ -15,7 +15,9 @@
             {% for repo in user.get_repos() %}
                 <li class="repo">
                     <div class="repo-link">
-                        <a href="/repos/{{repo.full_name}}" class="repo-name">{{ repo.name }}</a>
+                        <a href="{{url_for('repos.get_dirs', owner_name=repo.owner.login, repo_name=repo.name)}}" class="repo-name">
+                            {{ repo.name }}
+                        </a>
                     </div>
                     {% if repo.description %}
                         <div>
