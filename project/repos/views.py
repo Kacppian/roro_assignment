@@ -12,8 +12,6 @@ repos_blueprint = Blueprint(
                            template_folder='./templates',
                            static_folder='./static'
                            )
-# Needs to be cache
-repo_names = {}
 
 def generate_folder_slugs_with_heirarchy(path):
     """
@@ -68,9 +66,6 @@ def syntax_highlight(content, file_name=None):
 
 def get_repo(owner_name, repo_name):
     full_repo_name = "{}/{}".format(owner_name, repo_name)
-
-    # if repo_names.get(full_repo_name) is not None:
-    #     return repo_names[full_repo_name]
     try:
       repo = github_instance.get_repo(full_repo_name)
       repo_names[full_repo_name] = repo

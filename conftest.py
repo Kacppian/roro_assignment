@@ -3,7 +3,7 @@ from project import create_app
 
 @pytest.fixture(scope='module')
 def test_client():
-    flask_app = create_app({'SERVER_NAME': 'test_regit'})
+    flask_app = create_app({'SERVER_NAME': 'regit'})
 
     testing_client = flask_app.test_client()
     ctx = flask_app.app_context()
