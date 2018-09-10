@@ -68,7 +68,6 @@ def get_repo(owner_name, repo_name):
     full_repo_name = "{}/{}".format(owner_name, repo_name)
     try:
       repo = github_instance.get_repo(full_repo_name)
-      repo_names[full_repo_name] = repo
     except Exception as e:
       raise e
     return repo
