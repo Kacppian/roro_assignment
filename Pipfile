@@ -31,5 +31,6 @@ coverage = "*"
 arrow = "*"
 pytest = "*"
 pytest-cov = "*"
+gunicorn = "*"
 
 [dev-packages]
