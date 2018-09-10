@@ -30,3 +30,7 @@ a.path-link:nth-last-child(2) {
   white-space: pre-wrap !important;
   word-break: keep-all !important;
 }
+
+.file-contents{
+  overflow: auto;
+}

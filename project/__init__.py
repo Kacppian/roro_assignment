@@ -30,6 +30,7 @@ def create_app(opts={}):
     app = Flask(__name__)
     app.config['DEVELOPMENT'] = True
     app.config['PROPAGATE_EXCEPTIONS'] = True
+    app.config.from_object('config.ProductionConfig')
     for key in opts.keys():
         app.config[key] = opts[key]
     error_handling(app)
