@@ -1,5 +1,4 @@
-from flask import Blueprint, request, jsonify, session, render_template, redirect, url_for
-# from flask_login import current_user, login_user
+from flask import Blueprint, request, render_template, url_for
 from project import github_instance
 
 home_blueprint = Blueprint(
@@ -19,6 +18,8 @@ def get_popular_repos():
     return repos.get_page(0)
 
 def get_next_page_number(page_number):
+    if page_number < 0:
+      return 1
     return (page_number+1)
 
 def get_prev_page_number(page_number):

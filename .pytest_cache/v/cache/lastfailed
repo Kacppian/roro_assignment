@@ -1,0 +1,4 @@
+{
+  "project/tests/unit/test_repos.py": true,
+  "tests/functional/test_profile.py::test_construct_pagination_urls": true
+}

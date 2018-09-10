@@ -1,0 +1,23 @@
+[
+  "tests/functional/test_home.py::test_construct_pagination_urls",
+  "tests/functional/test_home.py::test_home",
+  "tests/functional/test_home.py::test_search_for_user",
+  "tests/functional/test_profile.py::test_get_details",
+  "tests/functional/test_repos.py::test_generate_file_nav_urls",
+  "tests/functional/test_repos.py::test_get_dirs",
+  "tests/functional/test_repos.py::test_get_files",
+  "tests/functional/test_repos.py::test_get_commits",
+  "tests/unit/test_home.py::test_get_next_page_number",
+  "tests/unit/test_home.py::test_get_prev_page_number",
+  "tests/unit/test_home.py::test_get_popular_repos",
+  "tests/unit/test_home.py::test_search_users",
+  "tests/unit/test_profile.py::test_get_github_user",
+  "tests/unit/test_repos.py::test_generate_folder_slugs_with_heirarchy",
+  "tests/unit/test_repos.py::test_generate_file_nav_urls",
+  "tests/unit/test_repos.py::test_syntax_highlight",
+  "tests/unit/test_repos.py::test_get_repo",
+  "tests/unit/test_repos.py::test_get_contents",
+  "tests/unit/test_repos.py::test_contruct_path",
+  "tests/unit/test_repos.py::test_get_next_page_number",
+  "tests/unit/test_repos.py::test_get_prev_page_number"
+]

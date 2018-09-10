@@ -1,26 +1,39 @@
-from flask import Flask
-from flask_bootstrap import Bootstrap
+from flask import Flask, render_template
 from github import Github
 import os
 
-app = Flask(__name__)
-app.config['GITHUB_CLIENT_ID'] = 'Iv1.7265011a9f876ab6'
-app.config['GITHUB_CLIENT_SECRET'] = '5032c975fb5abbe46e0e1239c4a1b33da77e550c'
-app.config['DEVELOPMENT'] = True
-app.config['PROPAGATE_EXCEPTIONS'] = True
-app.url_map.strict_slashes = True
+github_instance = Github(os.environ.get('GITHUB_TOKEN'), per_page=50)
 
+def error_handling(app):
+    @app.errorhandler(404)
+    def not_found_error(error):
+        return render_template('project/404.html'), 404
 
-# Bootstrap(app)
-github_instance = Github('aade3a843efa808800c4f67964ad9c47b808977f', per_page=50)
+    @app.errorhandler(500)
+    def internal_error(error):
+        db.session.rollback()
+        return render_template('project/500.html'), 500
 
 # Blueprints
-from project.profile.views import profile_blueprint
-app.register_blueprint(profile_blueprint, url_prefix='/profile')
+def register_blueprints(app):
+    from project.profile.views import profile_blueprint
+    app.register_blueprint(profile_blueprint, url_prefix='/profile')
 
-from project.home.views import home_blueprint
-app.register_blueprint(home_blueprint, url_prefix='/')
+    from project.home.views import home_blueprint
+    app.register_blueprint(home_blueprint, url_prefix='/')
 
-from project.repos.views import repos_blueprint
-app.register_blueprint(repos_blueprint, url_prefix='/repos')
+    from project.repos.views import repos_blueprint
+    app.register_blueprint(repos_blueprint, url_prefix='/repos')
+
+
+def create_app(opts={}):
+    app = Flask(__name__)
+    app.config['DEVELOPMENT'] = True
+    app.config['PROPAGATE_EXCEPTIONS'] = True
+    for key in opts.keys():
+        app.config[key] = opts[key]
+    error_handling(app)
+    register_blueprints(app)
+    return app
+
 
